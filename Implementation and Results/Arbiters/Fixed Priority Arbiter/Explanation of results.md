@@ -2,11 +2,14 @@ The design is made based on following order of decreasing priority : requestor0 
 
 From the waveform, it can be seen that :
 
-    - requestor2 asserts its request signal, while those for the other two requestors stay low, making grant2 high  ( req[2:0] : 'd4, grant[2:0] : 'd4)
+    - requestor2 asserts its request signal, while those for the other two requestors stay low, making grant2 high  
+      ( req[2:0] : 'd4, grant[2:0] : 'd4)
 
-    - requestor1 asserts its request signal, while those for the other two requestors stay low, making grant1 high  ( req[2:0] : 'd2, grant[2:0] : 'd2)
+    - requestor1 asserts its request signal, while those for the other two requestors stay low, making grant1 high  
+      ( req[2:0] : 'd2, grant[2:0] : 'd2)
 
-    - requestor0 asserts its request signal, while those for the other two requestors stay low, making grant0 high  ( req[2:0] : 'd1, grant[2:0] : 'd1)
+    - requestor0 asserts its request signal, while those for the other two requestors stay low, making grant0 high  
+      ( req[2:0] : 'd1, grant[2:0] : 'd1)
 
     - there is a region of overlap between request0 and request2, where grant0 goes high because of its higher priority 
       (req[2:0] : 'd5, grant[2:0] : 'd1)
