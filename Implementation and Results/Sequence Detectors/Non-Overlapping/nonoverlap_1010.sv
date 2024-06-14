@@ -1,4 +1,4 @@
-
+// Compilation with the macro MEALY_MACHINE results in Mealy implementation, otherwise MOORE machine is considered
 module nonoverlap_1010 (
                           input   logic  clk,
                           input   logic  rstn,
