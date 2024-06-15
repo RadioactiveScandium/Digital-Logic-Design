@@ -2,7 +2,7 @@ module PISO # (parameter N=5) (
   								input  logic 		 rstn,
   								input  logic 		 clk,
   								input  logic 		 load,
-  								input  logic [N-1:0] parallel_in,
+	                                                        input  logic [N-1:0]     parallel_in,
   								output logic 		 serial_out 				
 							  );
   
