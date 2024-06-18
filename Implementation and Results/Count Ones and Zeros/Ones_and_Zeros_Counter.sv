@@ -1,7 +1,8 @@
 /* Count the number of 1's and 0's in an input binary data */
 module CountOnes_and_Zeros #(parameter WIDTH = 8, MAX_POSSIBLE_COUNT = ($clog2(WIDTH)+1)) 
-  							(
-                              input  logic [WIDTH-1:0]            binary_data,                                                                             output logic [MAX_POSSIBLE_COUNT:0]  ones_count,
+  							            (
+                              input  logic [WIDTH-1:0]            binary_data,                                                                             
+                              output logic [MAX_POSSIBLE_COUNT:0]  ones_count,
                               output logic [MAX_POSSIBLE_COUNT:0]  zeros_count
                             );
 
