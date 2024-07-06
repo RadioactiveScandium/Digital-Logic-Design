@@ -3,9 +3,9 @@ Design for pulse generator. Takes an input sample and generates a corresponding 
 is selected via relevant defines. Exact same logic cane be used in edge detection applications.
 */
 module pulse_gen (
-  					input logic sig,
-  					input logic clk,
-  					input logic rstn,
+  					input  logic sig,
+  					input  logic clk,
+  					input  logic rstn,
   					output logic pulse_sig
 				  );
   
@@ -20,13 +20,10 @@ end
  
 `ifdef RISING_PULSE_GEN
         assign pulse_sig = ~gate & sig;
-`endif
-
-`ifdef FALLING_PULSE_GEN
+`elsif FALLING_PULSE_GEN
         assign pulse_sig = gate & ~sig;
+`else
+	assign pulse_sig = gate ^ sig;
 `endif
-
-/* Default : Either pulse generator */
-assign pulse_sig = gate ^ sig;
-
-endmodule 
+  
+endmodule
