@@ -7,7 +7,7 @@ module CountOnes_and_Zeros #(parameter WIDTH = 8, MAX_POSSIBLE_COUNT = ($clog2(W
 
 always_comb begin
   ones_count = 0;
-  for (int i = 0; i < 8; i = i + 1) begin : ONE_COUNTER
+  for (int i = 0; i < WIDTH; i = i + 1) begin : ONE_COUNTER
     if (binary_data[i] == 1'b1) begin
       ones_count = ones_count + 1;
     end
