@@ -1,1 +1,0 @@
-This folder contains the RTL codes and Testbench for a given design, split into individual folders. The term "implementation" here refers to the process of RTL code and has nothing to do with Synthesis or Physical Design
