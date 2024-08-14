@@ -1,7 +1,7 @@
 # Logic-Design
-Digital logic implementation and verification using Verilog/SV
+Digital logic implementation and verification using hardware description languages.
 
-This repository is meant for logic design and verification, starting from the simplest of blocks such as a half adder, all the way to FSMs.
+This repository is meant for logic design and verification, starting from the simplest of blocks such as a half adder, all the way to FSMs and beyond.
 
 The repository has been divided into two main directories :  
 
