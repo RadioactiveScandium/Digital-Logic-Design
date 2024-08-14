@@ -6,8 +6,9 @@ module counter_nbit_up_down #(parameter WIDTH = 3)				   (
   											output logic [WIDTH-1:0] Q 
 										   );
  
-    reg [WIDTH-1:0] tmp;
-    always @ (posedge clock or negedge resetn)
+reg [WIDTH-1:0] tmp;
+
+always @ (posedge clock or negedge resetn)
         begin
            `ifdef COUNTER_UP
                  begin
