@@ -2,7 +2,7 @@
 Design for pulse generator. Takes an input sample and generates a corresponding pulse based on whether Rising edge, Falling edge or Either edge functionality 
 is selected via relevant defines. Exact same logic cane be used in edge detection applications.
 */
-module pulse_gen (
+module pulse_det (
   					input  logic sig,
   					input  logic clk,
   					input  logic rstn,
@@ -18,9 +18,9 @@ always_ff @ (posedge clk or negedge rstn) begin
        gate <= sig;
 end
  
-`ifdef RISING_PULSE_GEN
+`ifdef RISING_PULSE_DET
         assign pulse_sig = ~gate & sig;
-`elsif FALLING_PULSE_GEN
+`elsif FALLING_PULSE_DET
         assign pulse_sig = gate & ~sig;
 `else
 	assign pulse_sig = gate ^ sig;

@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
-module pulse_gen_test ();
+module pulse_det_test ();
   logic rstn,clk,sig,pulse_sig;
-  pulse_gen dut (
+  pulse_det dut (
                   .*
                 );
   initial begin
@@ -11,7 +11,7 @@ module pulse_gen_test ();
   always #5 clk = ~clk;
   initial begin
     $dumpfile("test.vcd");
-    $dumpvars(0,pulse_gen_test);
+    $dumpvars(0,pulse_det_test);
   end
   initial begin  
     rstn = 1'b0; #20;
