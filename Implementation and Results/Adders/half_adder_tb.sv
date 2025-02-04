@@ -15,7 +15,7 @@ initial
         {a,b} = {2'b01}; #50;
         {a,b} = {2'b10}; #50;
         {a,b} = {2'b11}; #50;
-     $finish;
+        $finish;
 
     end
 
