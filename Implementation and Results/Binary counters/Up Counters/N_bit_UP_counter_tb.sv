@@ -1,24 +1,23 @@
 `timescale 1ns/1ps
-module N_bit_DOWN_counter_tb #(parameter LENGTH = 3)();
+module N_bit_UP_counter_tb #(parameter MOD_VALUE = 8)();
 
-logic clk,rst;
-logic [LENGTH-1:0] out;
+logic clk,rstn;
+logic [$clog2(MOD_VALUE)-1:0] out;  
 
 N_bit_UP_counter counter_1      (
                                       .clk(clk),
-                                      .rst(rst),
+                                      .rstn(rstn),
                                       .out(out)  
                                   );    
 
 initial begin
    clk = 1'b0;
-   rst = 1'b1;
+   rstn = 1'b1;
 end
 
 initial forever begin
-   #1 clk = ~clk ;
+   #5 clk = ~clk ;
 end
-
 
 initial
  begin
@@ -32,18 +31,18 @@ initial
      // $dumpvars(0,Four_bit_DOWN_counter_tb);
      // More documentation is available at : http://www.referencedesigner.com/tutorials/verilog/verilog_62.php
    
-     rst = 1'b0; #5;
-     rst = 1'b1; #30;
-     rst = 1'b0; #50;
-     rst = 1'b1; #50;
+     rstn = 1'b0; #15;
+     rstn = 1'b1; #30;
+     rstn = 1'b0; #50;
+     rstn = 1'b1; #50;
+
    	 $finish;
  
  end
 
-initial 
- begin
-            $display("Reset\t\t\tCount");
-            $monitor("%b\t\t\t%b",rst,out);
- end
+initial begin
+            $display("Sim Time(ps)\t\t\tReset\t\t\tCount");
+            $monitor("%0t\t\t\t\t%b\t\t\t%b\t\t",$realtime,rstn,out);
+end
 
 endmodule
