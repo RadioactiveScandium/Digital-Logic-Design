@@ -1,7 +1,7 @@
 module icg_cell (
                   input  logic clk_in,
                   input  logic en,
-  		  input  logic active_value,
+  		            input  logic active_value,
                   output logic clk_gated
                 );
 
