@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module N_bit_DOWN_counter  # (parameter MOD_VALUE = 8)    (                                          
                                                             input logic clk,
                                                             input logic rstn,
