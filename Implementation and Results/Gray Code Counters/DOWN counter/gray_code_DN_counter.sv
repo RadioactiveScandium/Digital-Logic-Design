@@ -6,6 +6,8 @@ module gray_code_DN_counter  # (parameter MOD_VALUE = 8) (
 
 logic [$clog2(MOD_VALUE)-1:0] count_binary;
 
+// Module definition stationed under Binary counters folder
+
 N_bit_DOWN_counter  #(.MOD_VALUE(8))    bin_counter (                                          
                                                       .clk(clk),
                                                       .rstn(rstn),
