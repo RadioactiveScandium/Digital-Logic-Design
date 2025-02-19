@@ -25,6 +25,7 @@ always_ff@(posedge clk or negedge rstn) begin
             2'b10 : sram[wr_addr] <= wr_data;        // Read Operation
             // Corrupting the memory by writing all zeros if read / write is attempted at a single address at the same instant - no problem if the addresses are different
             2'b11 : sram[wr_addr] <= (wr_addr == rd_addr) ? {WIDTH{1'h0}} : wr_data ;
+            default : sram[wr_addr] <= sram[wr_addr];  // No Operation
         endcase
     end
 end
