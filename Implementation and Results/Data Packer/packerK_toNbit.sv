@@ -22,11 +22,16 @@ always_ff @ (posedge clk or negedge rstn) begin : MOD_FACTOR_COUNTER
    end
 end
 
-`DFF_ARN(data_tmp[0], data_in, 1'b1, clk, rstn);
-
+/* Shift register */
 generate
- for (genvar i = 0 ; i < FACTOR-1  ; i = i+1)
-    `DFF_ARN(data_tmp[i+1], data_tmp[i], 1'b1, clk, rstn);
+    for (genvar i = 0 ; i < FACTOR  ; i = i+1) begin
+        if(i == 0) begin
+         `DFF_ARN(data_tmp[0], data_in, 1'b1, clk, rstn);
+       end 
+       else begin
+         `DFF_ARN(data_tmp[i], data_tmp[i-1], 1'b1, clk, rstn);
+       end
+    end
 endgenerate
 
 /* Unpacking the data into 1-D */
