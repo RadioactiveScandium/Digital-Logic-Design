@@ -21,6 +21,7 @@ initial begin
    data_in = 8'h0; #20;
 end
 
+// compile the TB with appropriate defines to select a particular data width
 initial begin
    $fsdbDumpvars("+fsdbfile+packer8_to16bit_test.fsdb","+all");
    rstn = 1'b0; #50;
