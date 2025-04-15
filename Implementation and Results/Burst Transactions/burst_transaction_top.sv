@@ -1,3 +1,4 @@
+// Compile this design with the define SIM_ONLY for DV purpose
 module burst_transaction_top #(parameter ADDR_WIDTH=16, DATA_WIDTH=8, BURST_LEN=8 )
                               (
                                   input  logic                  rstn,
