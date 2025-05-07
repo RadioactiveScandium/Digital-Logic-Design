@@ -24,10 +24,14 @@ This is the most conventional way of writing the data into any memory. On each c
 ### 2. Write with burst : 
 This is where things change a bit. The last address encountered when `burst_en == 0` is A4. Now, on the next clock edge, when this signal goes to a logic 1, the system no longer requires an updated input address. Rather, it records A4 as a “pseudo start address” and increments the address autonomously as long as the signal `burst_en` is held to logic high.
 
-
+![Write with burst](https://github.com/RadioactiveScandium/Digital-Logic-Design/blob/main/Concepts/Others/Burst%20Transactions/Images/Write_with_burst.png)
 
 ### 3. Read with no burst : 
 Conventional way of reading the data from any memory. On each clock cycle, a new address arrives and the read operation is carried out accordingly. The signal `burst_en` always being 0 signifies that this is a non-burst read.
 
+![Read with no burst](https://github.com/RadioactiveScandium/Digital-Logic-Design/blob/main/Concepts/Others/Burst%20Transactions/Images/Read_with_no_burst.png)
+
 ### 4. Read with burst : 
-Same as write burst, the last address encountered when `burst_en == 0` is A4. Now, on the next clock edge, when this signal goes to a logic 1, the system no longer requires an updated input address. It starts incrementing the last input address automatically and keeps doing so as long as the signal `burst_en` is held to logic high. On each clock cycle, a fresh data read from the memory is driven onto the `data_out` bus. 
+Same as write burst, the last address encountered when `burst_en == 0` is A4. Now, on the next clock edge, when this signal goes to a logic 1, the system no longer requires an updated input address. It starts incrementing the last input address automatically and keeps doing so as long as the signal `burst_en` is held to logic high. On each clock cycle, a fresh data read from the memory is driven onto the `data_out` bus.
+
+![Read with burst](https://github.com/RadioactiveScandium/Digital-Logic-Design/blob/main/Concepts/Others/Burst%20Transactions/Images/Read_with_burst.png)
