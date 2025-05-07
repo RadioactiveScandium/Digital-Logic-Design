@@ -70,3 +70,9 @@ A simple example to demonstrate the concept of burst transactions can be underst
 ![Case Study](https://github.com/RadioactiveScandium/Digital-Logic-Design/blob/main/Concepts/Others/Burst%20Transactions/Images/CASE_STUDY.png)
 
 From the top interface level, the SRAM receives all the control and data signals barring the address. There is a separate module called **Address Modifier**, which, based on the nature of transactions dictated by the `burst_en` signal, generates the correct address and passes it on to the SRAM. The rest is the usual functionality of an SRAM - either write or read based on the combination of `wren` and `rden` signals.
+
+## Implementation and Results
+
+The entire RTL and testbench suite for the demonstration of this concept is available here : 
+
+![Implementation](https://github.com/RadioactiveScandium/Digital-Logic-Design/tree/main/Implementation%20and%20Results/Burst%20Transactions)
