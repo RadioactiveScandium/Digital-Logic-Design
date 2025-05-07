@@ -75,4 +75,4 @@ From the top interface level, the SRAM receives all the control and data signals
 
 The entire RTL and testbench suite for the demonstration of this concept is available here : 
 
-* ![Implementation](https://github.com/RadioactiveScandium/Digital-Logic-Design/tree/main/Implementation%20and%20Results/Burst%20Transactions)
+![Implementation Collaterals](https://github.com/RadioactiveScandium/Digital-Logic-Design/tree/main/Implementation%20and%20Results/Burst%20Transactions)
