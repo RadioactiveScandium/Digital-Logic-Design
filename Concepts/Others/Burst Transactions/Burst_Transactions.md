@@ -43,7 +43,9 @@ This number can be a parameter and can be configured accordingly based on the re
 ## Burst Size
 Burst size refers to the total amount of data transferred within a single burst transaction. So in a burst, if each transfer is worth k bytes and there are q number of transfers (i.e., burst length) , then,
 
-                            _Burst Size = k * q   (in bytes)_
+```math
+                            Burst Size = k * q   (in bytes)
+```
 
 For AXI2, the burst size is capped at 128B, while for AXI5 it is 4KB.
 
