@@ -16,7 +16,10 @@ To understand this better, let’s break this down into a number of combinations
   * Read with no burst
   * Read with burst
 
-### Write with no burst : 
-This is the most conventional way of writing the data into any memory. On each clock cycle, a new data arrives with a new address and the write operation is carried out accordingly. The signal burst_en always being 0 signifies that this is a non-burst write.
+### 1. Write with no burst : 
+This is the most conventional way of writing the data into any memory. On each clock cycle, a new data arrives with a new address and the write operation is carried out accordingly. The signal `burst_en` always being 0 signifies that this is a non-burst write.
 
 ![Write with no burst](https://github.com/RadioactiveScandium/Digital-Logic-Design/blob/main/Concepts/Others/Burst%20Transactions/Images/WR_with_no_burst.png)
+
+### 2. Write with burst : 
+This is where things change a bit. The last address encountered when `burst_en == 0` is A4. Now, on the next clock edge, when this signal goes to a logic 1, the system no longer requires an updated input address. Rather, it records A4 as a “pseudo start address” and increments the address autonomously as long as the signal `burst_en` is held to logic high.
