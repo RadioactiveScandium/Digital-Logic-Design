@@ -49,11 +49,11 @@ Burst size refers to the total amount of data transferred within a single burst 
 
 For AXI2, the burst size is capped at 128B, while for AXI5 it is 4KB.
 
-Advantages, Disadvantages and Applications
+## Advantages, Disadvantages and Applications
 
 Burst mode significantly reduces the time spent on transaction setup and teardown, resulting in a higher data transfer rate. In a nutshell, this technique helps to increase the throughput by allowing a device to complete a known sequence of data transfers without multiple arbitration cycles. As an example, a memory read in burst mode doesn’t need to wait for an updated address input on each active clock edge to complete the operation - the internal logic can handle that.
 
-For devices like DRAM with high initial access latency, the addresses may take some to arrive before the read or write operations are executed. However, if the burst mode is enabled, then with a particular known address as startpoint, multiple read/write transactions can be carried out at once. This improvement in access time makes this a favorable technique for optimized memory access. 
+For devices like DRAM with high initial access latency, the addresses may take some to arrive before the read or write operations are executed. However, if the burst mode is enabled, then with a particular known address as startpoint, multiple read/write transactions can be carried out at once. This improvement in access time makes this a favorable technique for **optimized memory access.** 
 
 Owing to the benefits listed above, this technique is extensively used in memory accesses (especially DRAM), high speed interfaces like AXI, in encryption algorithms (such as AES), etc.
 
@@ -62,3 +62,10 @@ On the contrary to having its benefits, there is one big drawback of the burst m
 Also, when dealing with memories, the addresses can only be swept through sequentially, which can sometimes lead to performance degradation if the addresses of interest are scattered at non-uniform intervals. On top of this, extra control logic is needed, which can lead to increased area and power footprint. 
 
 Designers need to understand all the pros and cons of this technique before bringing it into action in their production. With the right set of trade-offs, the concept of burst transactions can be a highly effective strategy.
+
+## Case Study - accessing SRAM in burst mode
+
+A simple example to demonstrate the concept of burst transactions can be understood as follows. Assume a simple SRAM module which is supposed to be accessed in both burst and non-burst (cycle-stealing or continuous) modes. Below is a small micro-architectural diagram for this block : 
+
+
+From the top interface level, the SRAM receives all the control and data signals barring the address. There is a separate module called **Address Modifier**, which, based on the nature of transactions dictated by the `burst_en` signal, generates the correct address and passes it on to the SRAM. The rest is the usual functionality of an SRAM - either write or read based on the combination of `wren` and `rden` signals.
