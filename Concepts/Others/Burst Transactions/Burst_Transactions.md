@@ -16,4 +16,4 @@ To understand this better, let’s break this down into a number of combinations
 
 Write with no burst : This is the most conventional way of writing the data into any memory. On each clock cycle, a new data arrives with a new address and the write operation is carried out accordingly. The signal burst_en always being 0 signifies that this is a non-burst write.
 
-- ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](RadioactiveScandium/Digital-Logic-Design/Concepts/Others/Burst Transactions/Images/WR_with_no_burst.png)
+- ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://github.com/RadioactiveScandium/Digital-Logic-Design/blob/main/Concepts/Others/Burst%20Transactions/Images/WR_with_no_burst.png)
