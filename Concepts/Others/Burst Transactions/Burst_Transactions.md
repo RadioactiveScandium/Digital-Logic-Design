@@ -76,3 +76,19 @@ From the top interface level, the SRAM receives all the control and data signals
 The entire RTL and testbench suite for the demonstration of this concept is available here : 
 
 * [Implementation Collaterals](https://github.com/RadioactiveScandium/Digital-Logic-Design/tree/main/Implementation%20and%20Results/Burst%20Transactions)
+
+## Appendices
+
+1. Wavedrom source code :
+
+```
+{signal: [
+  {name: 'rstn', wave: '0.1..............'},
+  {name: 'clk', wave: 'p................'},
+  {name: 'rd_en', wave: '0.1..............'},  
+  //{name: 'burst_en', wave: '0................'},
+  {name: 'burst_en', wave: '0.....1......0...'},
+  {name: 'addr_in', wave: '0.3454.......5345', data: ["A1", "A2", "A3", "A4", "A12", "A13", "A14", "A15" ]},
+  {name: 'data_out', wave: '0.222222222222222', data: ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12", "D13", "D14", "D15", "D16"]},
+]}
+```
