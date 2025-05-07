@@ -35,3 +35,28 @@ Conventional way of reading the data from any memory. On each clock cycle, a new
 Same as write burst, the last address encountered when `burst_en == 0` is A4. Now, on the next clock edge, when this signal goes to a logic 1, the system no longer requires an updated input address. It starts incrementing the last input address automatically and keeps doing so as long as the signal `burst_en` is held to logic high. On each clock cycle, a fresh data read from the memory is driven onto the `data_out` bus.
 
 ![Read with burst](https://github.com/RadioactiveScandium/Digital-Logic-Design/blob/main/Concepts/Others/Burst%20Transactions/Images/Read_with_burst.png)
+
+## Burst Length
+Burst length refers to the number of data transfers within a single burst transaction. It essentially specifies how many sequential pieces of data will be sent based on a single address, increasing efficiency by allowing for multiple transfers without needing to repeatedly send the address.
+This number can be a parameter and can be configured accordingly based on the requirements. There is a limit on the burst length based on the interface under discussion. For example, in AXI3 the burst length is limited to 16, while for AXI4 it is 256.
+
+## Burst Size
+Burst size refers to the total amount of data transferred within a single burst transaction. So in a burst, if each transfer is worth k bytes and there are q number of transfers (i.e., burst length) , then,
+
+                            _Burst Size = k * q   (in bytes)_
+
+For AXI2, the burst size is capped at 128B, while for AXI5 it is 4KB.
+
+Advantages, Disadvantages and Applications
+
+Burst mode significantly reduces the time spent on transaction setup and teardown, resulting in a higher data transfer rate. In a nutshell, this technique helps to increase the throughput by allowing a device to complete a known sequence of data transfers without multiple arbitration cycles. As an example, a memory read in burst mode doesn’t need to wait for an updated address input on each active clock edge to complete the operation - the internal logic can handle that.
+
+For devices like DRAM with high initial access latency, the addresses may take some to arrive before the read or write operations are executed. However, if the burst mode is enabled, then with a particular known address as startpoint, multiple read/write transactions can be carried out at once. This improvement in access time makes this a favorable technique for optimized memory access. 
+
+Owing to the benefits listed above, this technique is extensively used in memory accesses (especially DRAM), high speed interfaces like AXI, in encryption algorithms (such as AES), etc.
+
+On the contrary to having its benefits, there is one big drawback of the burst mode transactions. During a burst transfer, the device initiating the burst effectively controls the bus. This can lead to contention with other devices that might also want to access the bus, potentially slowing down other operations. 
+
+Also, when dealing with memories, the addresses can only be swept through sequentially, which can sometimes lead to performance degradation if the addresses of interest are scattered at non-uniform intervals. On top of this, extra control logic is needed, which can lead to increased area and power footprint. 
+
+Designers need to understand all the pros and cons of this technique before bringing it into action in their production. With the right set of trade-offs, the concept of burst transactions can be a highly effective strategy.
