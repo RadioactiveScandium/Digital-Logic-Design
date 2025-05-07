@@ -1,3 +1,5 @@
+# Burst Transactions
+
 ## Introduction
 Assume there is a memory with a certain depth and some driver writes into and reads from it. Now, during the conventional write operation, the address and data to be written are required inputs to the memory. Similarly, for read operation, the memory requires the address as input from which the data is supposed to be read. 
 
