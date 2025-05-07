@@ -9,10 +9,10 @@ Explanation using waveforms
 
 To understand this better, let’s break this down into a number of combinations, considering the same example of memory as above : 
 
-   → Write with no burst
-   → Write with burst
-   → Read with no burst
-   → Read with burst
+  * Write with no burst
+  * Write with burst
+  * Read with no burst
+  * Read with burst
 
 Write with no burst : This is the most conventional way of writing the data into any memory. On each clock cycle, a new data arrives with a new address and the write operation is carried out accordingly. The signal burst_en always being 0 signifies that this is a non-burst write.
 
