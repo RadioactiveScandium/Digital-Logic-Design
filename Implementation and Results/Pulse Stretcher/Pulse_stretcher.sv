@@ -1,6 +1,6 @@
 module pulse_stretcher ( 
                            input logic            clk, 
-						   input logic            rstn, 
+			   input logic            rstn, 
                            input logic            in, 
                            input  logic  [3:0]    delay_value,
                            output logic           pulse_out 
