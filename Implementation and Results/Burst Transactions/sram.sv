@@ -1,23 +1,19 @@
-module sram #( 
-                parameter int ADDR_WIDTH = 16,
-                parameter int DATA_WIDTH = 8
-             ) 
-             ( 
-                input  logic                    rstn,  
-                input  logic                    clk,  
-                input  logic                    wren,  
-                input  logic                    rden,  
-                input  logic [ADDR_WIDTH-1:0]   addr,
-                input  logic [DATA_WIDTH-1:0]   wr_data,
-                output logic [DATA_WIDTH-1:0]   rd_data
+module sram ( 
+                input  logic                             rstn,  
+                input  logic                             clk,  
+                input  logic                             wren,  
+                input  logic                             rden,  
+                input  logic [sram_pkg::ADDR_WIDTH-1:0]  addr,
+                input  logic [sram_pkg::DATA_WIDTH-1:0]  wr_data,
+                output logic [sram_pkg::DATA_WIDTH-1:0]  rd_data
              );
 
-logic [(2**ADDR_WIDTH-1):0][DATA_WIDTH-1:0] sram;
+logic [(2**sram_pkg::ADDR_WIDTH-1):0][sram_pkg::DATA_WIDTH-1:0] sram;
 
 
 always_ff@(posedge clk or negedge rstn) begin
     if(~rstn)
-        {sram,rd_data} <= {0,{DATA_WIDTH{1'h0}}};
+        {sram,rd_data} <= {'0,{sram_pkg::DATA_WIDTH{1'h0}}};
     else begin
         case({wren,rden})
             2'b00   : sram[addr] <= sram[addr];   // No Operation
