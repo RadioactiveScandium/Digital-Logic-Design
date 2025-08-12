@@ -1,4 +1,5 @@
 `timescale 1ns/1ns
+`include "pkg.sv"
 module burst_transaction_top_test ();
 
 logic                          rstn;
