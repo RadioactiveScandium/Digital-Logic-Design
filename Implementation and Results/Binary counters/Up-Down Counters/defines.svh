@@ -1,1 +1,0 @@
-`define COUNTER_UP
