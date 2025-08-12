@@ -31,4 +31,17 @@ sram sram_i (
                   .rd_data(rd_data)
             );
 
+/////////// Assertions //////////
+
+// Checking if STRIDE is greater than depth of SRAM 
+`ifdef SVA_ON
+    property stride_in_bounds;
+      @(posedge clk) (addr_mod::STRIDE <= bt_top::ADDR_MAX);
+    endproperty
+    
+    stride_value_lt_sram_depth: assert property (stride_in_bounds) else begin
+        $error("Assertion failed: The value of stride (%0d) is greater than the end address (%0d), which is invalid",addr_mod::STRIDE, bt_top::ADDR_MAX);
+    end 
+`endif
+
 endmodule

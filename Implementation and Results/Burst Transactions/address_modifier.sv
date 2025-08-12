@@ -66,7 +66,7 @@ always_ff @ (posedge clk or negedge rstn) begin : ADDR_INCR_COUNTER
             end
             else begin 
                   addr_track_count <= addr_track_count + 1;
-                  addr_modified <= addr_modified + 1;  // convert the fixed increment by 1 to a control register programmable value (name it stride)
+                  addr_modified <= addr_modified + addr_mod::STRIDE ;  // convert the fixed increment by 1 to a control register programmable value (name it stride)
             end
         end
         else begin
@@ -76,7 +76,6 @@ always_ff @ (posedge clk or negedge rstn) begin : ADDR_INCR_COUNTER
     end
 end : ADDR_INCR_COUNTER
 
-// TODO : Use burst_len_counter and hook it up to a CSR based debug interface 
 
 
 /////////// Assertions //////////
@@ -92,4 +91,4 @@ end : ADDR_INCR_COUNTER
 `endif
 
 
-endmodule                         
+endmodule                                                  
