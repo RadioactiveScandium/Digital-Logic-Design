@@ -10,7 +10,7 @@ endpackage
 
 package addr_mod;
 
-parameter int STRIDE = 256 ;
+parameter int STRIDE_LEN = 8 ;
 
 endpackage //addr_mod
 

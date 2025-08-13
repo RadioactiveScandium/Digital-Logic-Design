@@ -1,13 +1,14 @@
-// Compile this design with the define SIM_ONLY for DV purpose
+// Compile this design with the define SIM_ONLY and SVA_ON only for DV purpose
 module burst_transaction_top (
-                                  input  logic                          rstn,
-                                  input  logic                          clk,
-                                  input  logic                          burst_en,
-                                  input  logic [bt_top::ADDR_WIDTH-1:0] addr_top,
-                                  input  logic                          wren,  
-                                  input  logic                          rden,  
-                                  input  logic [bt_top::DATA_WIDTH-1:0] wr_data,
-                                  output logic [bt_top::DATA_WIDTH-1:0] rd_data
+                                  input  logic                            rstn,
+                                  input  logic                            clk,
+                                  input  logic                            burst_en,
+                                  input  logic [bt_top::ADDR_WIDTH-1:0]   addr_top,
+                                  input  logic [addr_mod::STRIDE_LEN-1:0] stride,
+                                  input  logic                            wren,  
+                                  input  logic                            rden,  
+                                  input  logic [bt_top::DATA_WIDTH-1:0]   wr_data,
+                                  output logic [bt_top::DATA_WIDTH-1:0]   rd_data
                              );
 
 logic [bt_top::ADDR_WIDTH-1:0] addr_from_gen;
@@ -17,6 +18,7 @@ address_modifier address_gen(
                                  .clk(clk),
                                  .burst_en(burst_en),
                                  .addr_in(addr_top),
+                                 .stride(stride),
                                  .addr_modified(addr_from_gen)
                             );
 
@@ -30,18 +32,5 @@ sram sram_i (
                   .wr_data(wr_data),
                   .rd_data(rd_data)
             );
-
-/////////// Assertions //////////
-
-// Checking if STRIDE is greater than depth of SRAM 
-`ifdef SVA_ON
-    property stride_in_bounds;
-      @(posedge clk) (addr_mod::STRIDE <= bt_top::ADDR_MAX);
-    endproperty
-    
-    stride_value_lt_sram_depth: assert property (stride_in_bounds) else begin
-        $error("Assertion failed: The value of stride (%0d) is greater than the end address (%0d), which is invalid",addr_mod::STRIDE, bt_top::ADDR_MAX);
-    end 
-`endif
 
 endmodule

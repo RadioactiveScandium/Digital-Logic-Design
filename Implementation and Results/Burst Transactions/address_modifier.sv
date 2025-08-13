@@ -1,11 +1,12 @@
-// this design in simulation must be compiled with SIM_ONLY define and SVA_ON to enable the assertions
+// This design in simulation must be compiled with SIM_ONLY define and SVA_ON to enable the assertions
 
 module address_modifier (
-                             input  logic                          rstn,
-                             input  logic                          clk,
-                             input  logic                          burst_en,
-                             input  logic [bt_top::ADDR_WIDTH-1:0] addr_in,
-                             output logic [bt_top::ADDR_WIDTH-1:0] addr_modified
+                             input  logic                            rstn,
+                             input  logic                            clk,
+                             input  logic                            burst_en,
+                             input  logic [addr_mod::STRIDE_LEN-1:0] stride,
+                             input  logic [bt_top::ADDR_WIDTH-1:0]   addr_in,
+                             output logic [bt_top::ADDR_WIDTH-1:0]   addr_modified
                          );
 
 localparam int BURST_LEN = bt_top::BURST_LEN;
@@ -42,6 +43,7 @@ end
 // Logging the address when burst mode incrementing was initiated
 assign start_addr = burst_en_posedge ? addr_in : 'h0;
 
+// TODO : Use burst_len_counter and hook it up to a CSR based debug interface 
 // Have a debug interface to log this into some register - for Si-debug
 always_ff @ (posedge clk or negedge rstn) begin : BURST_LEN_COUNTER 
   if (~rstn) burst_len_counter <= 'd0; 
@@ -66,7 +68,7 @@ always_ff @ (posedge clk or negedge rstn) begin : ADDR_INCR_COUNTER
             end
             else begin 
                   addr_track_count <= addr_track_count + 1;
-                  addr_modified <= addr_modified + addr_mod::STRIDE ;  // convert the fixed increment by 1 to a control register programmable value (name it stride)
+                  addr_modified <= addr_modified + stride ;  // convert the fixed increment by 1 to a control register programmable value (name it stride)
             end
         end
         else begin
@@ -80,6 +82,7 @@ end : ADDR_INCR_COUNTER
 
 /////////// Assertions //////////
 
+// Checking if on-period of burst_en signal is less than or equal to BURST_LEN number of clock cycles
 `ifdef SVA_ON
     property burst_en_in_bounds;
       @(posedge clk) (burst_len_counter <= BURST_LEN-1);
@@ -90,5 +93,15 @@ end : ADDR_INCR_COUNTER
     end
 `endif
 
+// Checking if STRIDE is greater than depth of SRAM 
+`ifdef SVA_ON
+    property stride_in_bounds;
+      @(posedge clk) (stride <= bt_top::ADDR_MAX);
+    endproperty
+    
+    stride_value_lt_sram_depth: assert property (stride_in_bounds) else begin
+        $error("Assertion failed: The value of stride (%0d) is greater than the end address (%0d), which is invalid",stride, bt_top::ADDR_MAX);
+    end 
+`endif
 
-endmodule                                                  
+endmodule                         

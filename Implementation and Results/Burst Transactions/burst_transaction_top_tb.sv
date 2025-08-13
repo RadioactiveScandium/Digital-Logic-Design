@@ -1,21 +1,23 @@
 `timescale 1ns/1ns
-`include "pkg.sv"
+`include "/home/csaransh/FE-learning/src/rtl/burst_transaction_concept/pkg.sv"
 module burst_transaction_top_test ();
 
-logic                          rstn;
-logic                          clk;
-logic                          burst_en;
-logic [bt_top::ADDR_WIDTH-1:0] addr_top;
-logic                          wren;  
-logic                          rden;  
-logic [bt_top::DATA_WIDTH-1:0] wr_data;
-logic [bt_top::DATA_WIDTH-1:0] rd_data;
+logic                            rstn;
+logic                            clk;
+logic                            burst_en;
+logic [bt_top::ADDR_WIDTH-1:0]   addr_top;
+logic [addr_mod::STRIDE_LEN-1:0] stride;
+logic                            wren;  
+logic                            rden;  
+logic [bt_top::DATA_WIDTH-1:0]   wr_data;
+logic [bt_top::DATA_WIDTH-1:0]   rd_data;
 
 burst_transaction_top dut (
                               .rstn(rstn),
                               .clk(clk),
                               .burst_en(burst_en),
                               .addr_top(addr_top),
+                              .stride(stride),
                               .wren(wren),
                               .rden(rden),
                               .wr_data(wr_data),
@@ -25,7 +27,7 @@ burst_transaction_top dut (
 always #5 clk = ~clk;
 
 initial begin
-    rstn = 1'b0; clk  = 1'b0; burst_en = 1'b0; addr_top = 'h0; wren = 1'b0; rden = 1'b0; wr_data = 8'h0;
+    rstn = 1'b0; clk  = 1'b0; burst_en = 1'b0; addr_top = 'h0; stride = 8'd4 ; wren = 1'b0; rden = 1'b0; wr_data = 8'h0;
     #30;
 end
 
