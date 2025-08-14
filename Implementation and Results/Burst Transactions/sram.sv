@@ -10,7 +10,6 @@ module sram (
 
 logic [(2**sram_pkg::ADDR_WIDTH-1):0][sram_pkg::DATA_WIDTH-1:0] sram;
 
-
 always_ff@(posedge clk or negedge rstn) begin
     if(~rstn)
         {sram,rd_data} <= {'0,{sram_pkg::DATA_WIDTH{1'h0}}};

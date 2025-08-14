@@ -4,18 +4,21 @@ module address_modifier (
                              input  logic                            rstn,
                              input  logic                            clk,
                              input  logic                            burst_en,
-                             input  logic [addr_mod::STRIDE_LEN-1:0] stride,
+                             input  logic [addr_mod::STRIDE_LEN-1:0] stride, // can be programmed only in non-burst mode - no dynamic programming supported
+                                                                             // Hardware failsafe for unintentional programming of stride in burst mode is nice to have, but since this can be intercepted by                                                                                 following proper sequence in sotware, the enahncement is de-prioritized 
                              input  logic [bt_top::ADDR_WIDTH-1:0]   addr_in,
+                             output logic                            addr_invalid,
                              output logic [bt_top::ADDR_WIDTH-1:0]   addr_modified
                          );
 
 localparam int BURST_LEN = bt_top::BURST_LEN;
 
-logic                                burst_en_ff;
-logic                                burst_en_posedge;
-logic [$clog2(BURST_LEN):0]          addr_track_count;
-logic [bt_top::ADDR_WIDTH-1:0]       start_addr;
-logic [5:0]                          burst_len_counter;
+logic                            burst_en_ff;
+logic                            burst_en_posedge;
+logic [$clog2(BURST_LEN):0]      addr_track_count;
+logic [bt_top::ADDR_WIDTH-1:0]   start_addr;
+logic [5:0]                      burst_len_counter;
+logic [bt_top::ADDR_WIDTH-1:0]   addr_modified_tmp;
 
 // Posedge Detection on burst_en
 always_ff @ (posedge clk or negedge rstn) begin
@@ -58,26 +61,31 @@ end : BURST_LEN_COUNTER
 always_ff @ (posedge clk or negedge rstn) begin : ADDR_INCR_COUNTER 
     if (~rstn) begin
         addr_track_count <= 'd0;
-        addr_modified <= 'h0;
+        addr_modified_tmp <= 'h0;
     end
     else begin
         if (burst_en) begin
             if(addr_track_count == BURST_LEN) begin
                   addr_track_count <= 'd0;
-                  addr_modified <= start_addr;
+                  addr_modified_tmp <= start_addr;
             end
             else begin 
                   addr_track_count <= addr_track_count + 1;
-                  addr_modified <= addr_modified + stride ;  // convert the fixed increment by 1 to a control register programmable value (name it stride)
+                  addr_modified_tmp <= addr_modified_tmp + stride ;  // convert the fixed increment by 1 to a control register programmable value (name it stride)
             end
         end
         else begin
                   addr_track_count <= 'd0;
-                  addr_modified <= addr_in;
+                  addr_modified_tmp <= addr_in;
         end
     end
 end : ADDR_INCR_COUNTER
 
+// If the product of burst length and programmed stride value is greater than the SRAM depth, then a fixed invalid address is generated (the last address of the SRAM) and propagated to the RAM instance
+// Then, this becomes the responsibility of the SW/FW team to ensure that they unintentionally do not access this forbidden address for any R/W operation
+// Future work : The forbidden address may be made configurable to a custom value, but doesn't hurt to keep it in the current state also
+assign addr_invalid  = ( (BURST_LEN * stride) > bt_top::ADDR_MAX );
+assign addr_modified = addr_invalid ? {bt_top::ADDR_WIDTH{1'b1}} : addr_modified_tmp;
 
 
 /////////// Assertions //////////
@@ -101,6 +109,16 @@ end : ADDR_INCR_COUNTER
     
     stride_value_lt_sram_depth: assert property (stride_in_bounds) else begin
         $error("Assertion failed: The value of stride (%0d) is greater than the end address (%0d), which is invalid",stride, bt_top::ADDR_MAX);
+    end 
+`endif
+
+// Checking if modified address is out of bounds 
+`ifdef SVA_ON
+    property address_in_bounds;
+      @(posedge clk) ( (BURST_LEN * stride) <= bt_top::ADDR_MAX );
+    endproperty
+    stride_burstlen_product_lt_sram_depth: assert property (address_in_bounds) else begin
+        $error("Assertion failed: The value of stride and burst length product (%0d) is greater than the end address (%0d), which is invalid",(BURST_LEN*stride), bt_top::ADDR_MAX);
     end 
 `endif
 
