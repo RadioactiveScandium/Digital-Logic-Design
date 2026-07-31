@@ -1,6 +1,6 @@
 # Enforce clean simulation and readability patterns
-+always-ff-blocking
-+always-comb-non-blocking
++always-ff-non-blocking
++always-comb-blocking
 +packed-dimensions-range-ordering
 -no-trailing-spaces
 -line-length
