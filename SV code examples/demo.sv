@@ -7,7 +7,7 @@ module demo (
 
   always_ff @ (posedge clk or negedge rstn) begin
     if (~rstn) b <= 1'b0;
-  else b = a;
+  else b <= a;
   end
 
   
