@@ -15,3 +15,4 @@
 -struct-union-name-style
 -parameter-name-style
 -case-missing-default
+-enum-name-style
