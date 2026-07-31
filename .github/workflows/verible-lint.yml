@@ -29,4 +29,5 @@ jobs:
       uses: chipsalliance/verible-linter-action@main
       with:
         fail_on_error: true
+        extra_args: "--show_lint_warnings"
         github_token: ${{ secrets.GITHUB_TOKEN }}
