@@ -1,18 +1,14 @@
 name: SystemVerilog Code Style Lint
 
 on:
-  # Trigger the workflow on every push event to ANY branch or tag
   push:
     branches:
       - '**'
     tags:
       - '**'
-  
-  # Keep this to show line-by-line annotations inside pull requests
   pull_request:
     types: [opened, synchronize, reopened]
 
-# Cancel any in-progress runs if you push a new commit quickly
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -22,12 +18,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Pull your files down onto the machine
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Run Verible Linter
-      uses: chipsalliance/verible-linter-action@main
-      with:
-        fail_on_error: true
-        extra_args: "--show_lint_warnings"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+    # Step 2: Grab the official standalone compiled Verible binary tools
+    - name: Install Native Verible Toolchain
+      run: |
+        wget https://github.com
+        tar -xzf verible-v0.0-3899-g75c38daf-Ubuntu-22.04-x86_64.tar.gz
+        echo "$PWD/verible-v0.0-3899-g75c38daf/bin" >> $GITHUB_PATH
+
+    # Step 3: Run the check on every .v and .sv file natively
+    - name: Execute Strict Lint Evaluation
+      run: |
+        # Find all verilog/systemverilog files and feed them to the linter tool
+        find . -name "*.v" -o -name "*.sv" | xargs verible-verilog-lint --rules_config=.rules.verible_lint
