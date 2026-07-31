@@ -29,9 +29,9 @@ initial begin
   $finish;
 end
 
-typedef enum {MEALY,MOORE} fsm_type;
+  typedef enum {MEALY,MOORE} fsm_type_t;
   initial begin
-      fsm_type type_fsm;
+      fsm_type_t type_fsm;
       `ifdef MEALY_MACHINE
     		type_fsm = MEALY;
       `else
