@@ -1,9 +1,9 @@
 typedef struct packed {
       logic [15:0] data_A;
       logic [15:0] data_B;
-  } INFO_OP ;
+} INFO_OP_t ;
 
-INFO_OP info_OP;
+INFO_OP_t info_OP;
 
 
 module struct_design (
