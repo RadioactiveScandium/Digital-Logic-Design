@@ -12,3 +12,6 @@
 -unpacked-dimensions-range-ordering
 -typedef-enums
 -generate-label
+-struct-union-name-style
+-parameter-name-style
+-case-missing-default
