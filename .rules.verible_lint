@@ -11,3 +11,4 @@
 -package-filename
 -unpacked-dimensions-range-ordering
 -typedef-enums
+-generate-label
