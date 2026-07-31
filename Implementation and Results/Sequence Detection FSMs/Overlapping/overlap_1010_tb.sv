@@ -31,14 +31,14 @@ end
 
   typedef enum {MEALY,MOORE} fsm_type_t;
   initial begin
-      fsm_type_t type_fsm;
+      fsm_type_t kind_of_fsm;
       `ifdef MEALY_MACHINE
-    		type_fsm = MEALY;
+    		kind_of_fsm = MEALY;
       `else
-        	type_fsm = MOORE;
+        	kind_of_fsm = MOORE;
       `endif
     $display("*****************");
-    $display("\nFSM type : %s\n",type_fsm.name);
+    $display("\nFSM type : %s\n",kind_of_fsm.name);
     $display("*****************");
 end
   
