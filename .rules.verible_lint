@@ -2,3 +2,4 @@
 +always-ff-blocking
 +always-comb-non-blocking
 +packed-dimensions-range-ordering
+-no-trailing-spaces
