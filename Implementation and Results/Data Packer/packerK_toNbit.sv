@@ -23,7 +23,7 @@ always_ff @ (posedge clk or negedge rstn) begin : MOD_FACTOR_COUNTER
 end
 
 /* Shift register */
-generate : SHIFT_REG
+generate
     for (genvar i = 0 ; i < FACTOR  ; i = i+1) begin
         if(i == 0) begin
          `DFF_ARN(data_tmp[0], data_in, 1'b1, clk, rstn);
@@ -32,7 +32,7 @@ generate : SHIFT_REG
          `DFF_ARN(data_tmp[i], data_tmp[i-1], 1'b1, clk, rstn);
        end
     end
-endgenerate : SHIFT_REG
+endgenerate
 
 /* Unpacking the data into 1-D */
 logic [(FACTOR*IN_WIDTH)-1:0] data_out_tmp_1D;
