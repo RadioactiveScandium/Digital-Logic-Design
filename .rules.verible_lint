@@ -6,3 +6,4 @@
 -line-length
 -no-tabs
 -posix-eof
+-explicit-parameter-storage-type
