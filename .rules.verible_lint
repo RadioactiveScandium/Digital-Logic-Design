@@ -10,3 +10,4 @@
 -module-filename
 -package-filename
 -unpacked-dimensions-range-ordering
+-typedef-enums
