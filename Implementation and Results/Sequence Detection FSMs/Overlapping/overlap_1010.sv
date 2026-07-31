@@ -8,9 +8,9 @@ module overlap_1010 (
                        );
 
 `ifdef MEALY_MACHINE
-enum logic [1:0] {S1,S10,S101,S1010}     state,next_state;
+  typedef enum logic [1:0] {S1,S10,S101,S1010}     state,next_state;
 `else
-enum logic [2:0] {S1,S10,S101,S1010,END} state,next_state;
+  typedef enum logic [2:0] {S1,S10,S101,S1010,END} state,next_state;
 `endif
 
 enum logic {MEALY,MOORE} fsm_type;
