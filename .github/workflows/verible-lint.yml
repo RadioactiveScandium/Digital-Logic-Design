@@ -1,0 +1,29 @@
+name: SystemVerilog Code Style Lint
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Cancel in-progress runs if a new commit is pushed to the same PR
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  style-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Pull down the repository source files
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # Step 2: Automatically scan and lint all SystemVerilog files
+    - name: Run Verible Linter
+      uses: chipsalliance/verible-linter-action@main
+      with:
+        # Halt and fail the CI runner if any style rules are broken
+        fail_on_error: true
+        github_token: ${{ secrets.GITHUB_TOKEN }}
