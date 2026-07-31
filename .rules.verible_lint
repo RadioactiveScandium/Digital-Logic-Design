@@ -8,3 +8,4 @@
 -posix-eof
 -explicit-parameter-storage-type
 -module-filename
+-package-filename
