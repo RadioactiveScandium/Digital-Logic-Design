@@ -5,3 +5,4 @@
 -no-trailing-spaces
 -line-length
 -no-tabs
+-posix-eof
