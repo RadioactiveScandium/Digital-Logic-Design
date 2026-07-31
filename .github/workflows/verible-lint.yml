@@ -38,5 +38,6 @@ jobs:
     # Step 3: Enforce strict lint checking
     - name: Execute Strict Lint Evaluation
       run: |
-        # Locate all structural files and force exit status checking
-        find . -name "*.v" -o -name "*.sv" | xargs verible-verilog-lint --rules_config=.rules.verible_lint
+        # Using -print0 and xargs -0 handles file/folder names with blank spaces cleanly
+        find . \( -name "*.v" -o -name "*.sv" \) -print0 | xargs -0 verible-verilog-lint --rules_config=.rules.verible_lint
+
