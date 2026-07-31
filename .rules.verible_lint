@@ -7,3 +7,4 @@
 -no-tabs
 -posix-eof
 -explicit-parameter-storage-type
+-module-filename
