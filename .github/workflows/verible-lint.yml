@@ -18,19 +18,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Pull your files down onto the machine
+    # Step 1: Pull files down onto the runner
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # Step 2: Grab the official standalone compiled Verible binary tools
+    # Step 2: Grab the official stable linux-static release path
     - name: Install Native Verible Toolchain
       run: |
-        wget https://github.com
-        tar -xzf verible-v0.0-3899-g75c38daf-Ubuntu-22.04-x86_64.tar.gz
-        echo "$PWD/verible-v0.0-3899-g75c38daf/bin" >> $GITHUB_PATH
+        # Download using a dynamic variable pattern targeting the verified static binary layout
+        export VERIBLE_VERSION="v0.0-3622-g07b310a3"
+        wget https://github.com/chipsalliance/verible/releases/download/${VERIBLE_VERSION}/verible-${VERIBLE_VERSION}-linux-static-x86_64.tar.gz
+        
+        # Extract files cleanly 
+        tar -xzf verible-${VERIBLE_VERSION}-linux-static-x86_64.tar.gz
+        
+        # Add the binary path directly to the GitHub runner environment
+        echo "$PWD/verible-${VERIBLE_VERSION}/bin" >> $GITHUB_PATH
 
-    # Step 3: Run the check on every .v and .sv file natively
+    # Step 3: Enforce strict lint checking
     - name: Execute Strict Lint Evaluation
       run: |
-        # Find all verilog/systemverilog files and feed them to the linter tool
+        # Locate all structural files and force exit status checking
         find . -name "*.v" -o -name "*.sv" | xargs verible-verilog-lint --rules_config=.rules.verible_lint
